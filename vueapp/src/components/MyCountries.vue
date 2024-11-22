@@ -1,0 +1,81 @@
+<script setup>
+import { defineProps, onMounted, watchEffect, ref } from 'vue';
+const props = defineProps(['searchTerm']);
+const names = ref([]);
+let countries = [];
+
+onMounted(() => {
+  var url = 'https://restcountries.com/v3.1/all';
+  fetch(url)
+    .then((res) => res.text())
+    .then((data) => {
+      countries = JSON.parse(data).map(function (elem) {
+        return elem.name.common;
+      });
+      countries = countries.sort((n1, n2) => {
+        if (n1 > n2) return 1;
+        if (n1 < n2) return -1;
+        return 0;
+      });
+      names.value = countries;
+    })
+    .catch((err) => (names.value = [err.toString()]));
+});
+
+// watch(
+//   () => props.searchTerm,
+//   (newName) => {
+//     let countriesFiltered = countries.filter((n) => {
+//       console.log('hej');
+//       const reg = new RegExp('^' + newName, 'i');
+//       if (n.match(reg)) return true;
+//       else return false;
+//     });
+//     names.value = countriesFiltered;
+//   }
+// );
+
+watchEffect(() => {
+  console.log(props.searchTerm) // Do not delete
+  let countriesFiltered = countries.filter((n) => {
+    const reg = new RegExp('^' + props.searchTerm, 'i');
+    if (n.match(reg)) return true;
+    else return false;
+  });
+  names.value = countriesFiltered;
+});
+</script>
+
+<template>
+  <div id="myCountries">
+    <div id="countries-list">
+      <h1>Countries List</h1>
+      <div v-show="!countries.length">Fetching countries in progress...</div>
+      <p>Entered search term: {{ searchTerm }}</p>
+      <ul id="result">
+        <li v-for="n in names" :key="n">{{ n }}</li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+#myCountries {
+  background-color: papayawhip;
+  padding: 3rem;
+}
+h1,
+p {
+  margin-left: 1rem;
+}
+
+#countries-list {
+  width: max-content;
+  text-align: left;
+  margin: 0 auto;
+}
+
+#result {
+  width: max-content;
+}
+</style>

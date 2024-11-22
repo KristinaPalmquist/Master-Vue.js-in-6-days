@@ -1,7 +1,9 @@
 <script setup>
-import { inject, onMounted, ref, watch } from 'vue';
+import { defineProps, onMounted, ref, watch } from 'vue';
 
-const searchTerm = inject(['searchTerm']);
+const props = defineProps(['searchTerm'])
+
+
 const names = ref([]);
 let countries = [];
 
@@ -23,9 +25,9 @@ onMounted(() => {
     .catch((err) => (names.value = [err.toString()]));
 });
 
-watch(searchTerm, () => {
+watch(() => props.searchTerm, (newName) => {
   let countriesFiltered = countries.filter((n) => {
-    const reg = new RegExp('^' + searchTerm.value, 'i');
+    const reg = new RegExp('^' + newName, 'i');
     if (n.match(reg)) return true;
     else return false;
   });
@@ -38,7 +40,7 @@ watch(searchTerm, () => {
     <div id="countries-list">
       <h1>Countries List</h1>
       <div v-show="!countries.length">Fetching countries in progress...</div>
-      <p>Entered search term: {{ searchTerm }}</p>
+      <p>Entered search term: {{ props.searchTerm }}</p>
       <ul id="result">
         <li v-for="n in names" :key="n">{{ n }}</li>
       </ul>

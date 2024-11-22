@@ -1,6 +1,7 @@
 <script setup>
-import { defineProps, onMounted, watchEffect, ref } from 'vue';
-const props = defineProps(['searchTerm']);
+import { inject, onMounted, ref, watch } from 'vue';
+
+const searchTerm = inject(['searchTerm']);
 const names = ref([]);
 let countries = [];
 
@@ -22,23 +23,9 @@ onMounted(() => {
     .catch((err) => (names.value = [err.toString()]));
 });
 
-// watch(
-//   () => props.searchTerm,
-//   (newName) => {
-//     let countriesFiltered = countries.filter((n) => {
-//       console.log('hej');
-//       const reg = new RegExp('^' + newName, 'i');
-//       if (n.match(reg)) return true;
-//       else return false;
-//     });
-//     names.value = countriesFiltered;
-//   }
-// );
-
-watchEffect(() => {
-  console.log(props.searchTerm) // Do not delete
+watch(searchTerm, () => {
   let countriesFiltered = countries.filter((n) => {
-    const reg = new RegExp('^' + props.searchTerm, 'i');
+    const reg = new RegExp('^' + searchTerm.value, 'i');
     if (n.match(reg)) return true;
     else return false;
   });
@@ -70,7 +57,7 @@ p {
 }
 
 #countries-list {
-  width: max-content;
+  width: 500px;
   text-align: left;
   margin: 0 auto;
 }

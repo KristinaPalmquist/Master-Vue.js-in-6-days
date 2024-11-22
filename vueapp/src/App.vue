@@ -1,9 +1,11 @@
 <script setup>
-import {  provide, ref } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 import MyCountries from './components/MyCountries.vue';
 
 const searchTerm = ref('');
+provide('searchTerm', searchTerm);
 
+onMounted(() => document.querySelector('input[type=text]').focus());
 </script>
 
 <template>
@@ -16,11 +18,9 @@ const searchTerm = ref('');
         placeholder="Enter Country Name"
       />
     </form>
-    <MyCountries :searchTerm="searchTerm" />
+    <MyCountries />
   </div>
 </template>
-
-<script></script>
 
 <style>
 #app {
@@ -50,9 +50,17 @@ const searchTerm = ref('');
   padding: 0.5rem 1.5rem;
   border-radius: 6px;
   border: solid 1px #ccc;
+  transition: 0.5s;
+  /* outline: none; */
+  /* outline-offset: 4px; */
 }
 
 #app #countrySearch input::placeholder {
   color: #bbb;
+}
+
+#app #countrySearch input:focus {
+  border: solid 3px hotpink;
+  outline: solid 6px rgb(249, 160, 204);
 }
 </style>

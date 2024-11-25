@@ -1,20 +1,22 @@
 <script setup>
-import { ref } from 'vue';
-import MySearch from './components/MySearch.vue';
-import MyCountries from './components/MyCountries.vue';
+// import { ref } from 'vue';
+// import MySearch from './components/MySearch.vue';
+// import MyCountries from './components/MyCountries.vue';
+import MyCounter from './components/MyCounter.vue';
 
-const searchTerm = ref('');
+// const searchTerm = ref('');
 
-const receiveSearchTerm = (newValue) => {
-  searchTerm.value = newValue;
-  console.log('New search term:', newValue);
-};
+// const receiveSearchTerm = (newValue) => {
+//   searchTerm.value = newValue;
+//   console.log('New search term:', newValue);
+// };
 </script>
 
 <template>
   <div id="app">
-    <MySearch v-model="searchTerm" v-on:updateSearchTerm="receiveSearchTerm" />
-    <MyCountries :searchTerm="searchTerm"/>
+    <MyCounter />
+    <!-- <MySearch v-model="searchTerm" v-on:updateSearchTerm="receiveSearchTerm" />
+    <MyCountries :searchTerm="searchTerm"/> -->
   </div>
 </template>
 

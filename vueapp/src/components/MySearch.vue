@@ -17,13 +17,18 @@ watch(searchTerm, (newValue) => {
   console.log('new value: ', newValue);
 });
 
-onMounted(() => document.querySelector('input[type=text]').focus());
+// onMounted(() => document.querySelector('input[type=text]').focus());
 </script>
 
 <template>
   <form action="" id="countrySearch">
     <label for="name">Search: </label>
-    <input type="text" v-model="searchTerm" placeholder="Enter Country Name" />
+    <input
+      type="text"
+      v-model="searchTerm"
+      placeholder="Enter Country Name"
+      v-focus
+    />
   </form>
 </template>
 

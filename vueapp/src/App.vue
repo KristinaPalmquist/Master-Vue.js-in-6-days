@@ -1,8 +1,9 @@
 <script setup>
 // import { ref } from 'vue';
 // import MySearch from './components/MySearch.vue';
-// import MyCountries from './components/MyCountries.vue';
-import MyCounter from './components/MyCounter.vue';
+import MyCountries from './components/MyCountries.vue';
+import MyClock from './components/MyClock.vue';
+// import MyCounter from './components/MyCounter.vue';
 
 // const searchTerm = ref('');
 
@@ -14,9 +15,11 @@ import MyCounter from './components/MyCounter.vue';
 
 <template>
   <div id="app">
-    <MyCounter />
+<MyCountries/>
+    <!-- <MyCounter /> -->
     <!-- <MySearch v-model="searchTerm" v-on:updateSearchTerm="receiveSearchTerm" />
     <MyCountries :searchTerm="searchTerm"/> -->
+    <MyClock />
   </div>
 </template>
 

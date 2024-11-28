@@ -1,59 +1,30 @@
 <script setup>
-// import { ref } from 'vue';
+import useCounterMaxWithError from '../composables/useCounterMaxWithError';
 
-// const count = ref(null);
-// const count = ref('201');
-// const color = 'darkBlue';
-// const bgColor = '#ddd';
-// const colors = { color, bgColor };
-// const max = 200;
-// const props = defineProps(['index']);
-// const index = props.index || 1;
-
-// const increment = () => {
-//   count.value++;
-// };
-
-// const decrement = () => {
-//   count.value--;
-// };
+const init = 10;
+const max = 5;
+const [count, increment, decrement, error] = useCounterMaxWithError(init, max);
 </script>
 
 <template>
   <div id="myCounter">
-    <!-- <h1>My Counter Component - #{{ index }}</h1> -->
     <h1>My Counter Component</h1>
 
-    <!-- <p>
-      Reactive variable count: <b> {{ count }}</b>
-    </p> -->
-    <!-- <div id="counterDiv">
+    <p>Reactive variable count:</p>
+    <div id="counterDiv">
       <button @click="decrement()">-</button>
 
-      <input type="text" v-model="count" v-integers-only v-clearable v-focus />
+      <p>{{ count }}</p>
 
       <button @click="increment()">+</button>
-    </div> -->
+    </div>
 
     <!-- <p>{{ integer }}</p> -->
-    <!-- <p>Max value: {{ max }}</p> -->
+    <p>Max value: {{ max }}</p>
     <!-- <p>Entered value: {{ count }}</p> -->
+    <p class="error" v-show="error !== ''">Error message: {{ error }}</p>
 
     <hr />
-
-    <div class="clock">
-      <p>Time</p><span v-timer></span>
-    </div>
-    <div class="clock">
-      <p>Time MS</p><span v-timer.ms></span>
-    </div>
-
-    <div class="clock">
-      <p>Time elapsed</p><span v-timer.chrono></span>
-    </div>
-    <div class="clock">
-      <p>Time elapsed MS</p><span v-timer.chrono.ms></span>
-    </div>
   </div>
 </template>
 
@@ -82,14 +53,11 @@ h1 {
   /* font-size: 3rem; */
 }
 
-/* p {
-  font-size: 2rem;
-} */
 #myCounter #counterDiv {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: max-content;
+  justify-content: space-evenly;
+  width: 750px;
   background-color: #eee;
   border: solid 1px #c4c4c4;
   border-radius: 10px;
@@ -121,24 +89,11 @@ input {
   border-radius: 8px;
 }
 
-.clock {
-  width: 800px;
-  border: 1px solid #ccc;
-  margin: 1rem auto;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.clock p  {
-  font-size: 2rem;
-  font-family: 'Courier New', Courier, monospace;
-  text-align: left;
-}
-
-.clock span {
+#myCounter #counterDiv p {
   font-size: 5rem;
-  font-family: 'Courier New', Courier, monospace;
-  text-align: left;
+}
+
+.error {
+  color: red;
 }
 </style>

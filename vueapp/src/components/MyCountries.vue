@@ -1,10 +1,11 @@
-<!-- <script setup>
-import useFetch from '@/composables/useFetch';
+<script setup>
+// import useFetch from '@/composables/useFetch';
+import useFetchCountries from '@/composables/useFetchCountries';
 import { ref } from 'vue';
 
 const data = ref();
 const url = 'https://restcountries.com/v3.1/all';
-const [startFetch] = useFetch(url);
+const [startFetch] = useFetchCountries(url);
 const initData = async () => {
   data.value = await startFetch();
 };
@@ -15,7 +16,10 @@ const initData = async () => {
     <h1>My Countries</h1>
     <button @click="initData">Start fetch</button>
     <br />
-    <p>Data: {{ data }}</p>
+    <h3>Data:</h3>
+    <ul id="countries-list">
+      <li v-for="(country, i) in data" :key="i">{{ country }}</li>
+    </ul>
   </div>
 </template>
 
@@ -30,18 +34,24 @@ p {
 }
 
 #countries-list {
-  width: 500px;
+  /* width: 500px; */
   text-align: left;
   margin: 0 auto;
+  display: ;
 }
 
-#result {
-  width: max-content;
+#countries-list li {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  list-style: none;
+  display: inline-block;
 }
-</style> -->
+</style>
 
-
-
+<!-- 
 <script setup>
 import useFetch from "../composables/useFetch"
 import { ref } from "vue";
@@ -56,4 +66,4 @@ const initData = async () => {
 <button @click="initData">Start Fetch</button>
 <br/><br/>
 <b>Data</b> : {{data}}
-</template>
+</template> -->

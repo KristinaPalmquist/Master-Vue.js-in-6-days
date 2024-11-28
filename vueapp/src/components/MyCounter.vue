@@ -1,30 +1,40 @@
 <script setup>
-import useCounterMaxWithError from '../composables/useCounterMaxWithError';
+// import useCounterMaxWithError from '../composables/useCounterMaxWithError';
+import useWindowSize from '../composables/useWindowSize';
+import useGeolocationWithDetails from '../composables/useGeolocationWithDetails';
+// import useMap from '../composables/useMap';
+// import { onMounted, watchEffect } from 'vue';
 
-const init = 10;
-const max = 5;
-const [count, increment, decrement, error] = useCounterMaxWithError(init, max);
+const windowSize = useWindowSize();
+const [latitude, longitude, country, city] = useGeolocationWithDetails();
+
+// onMounted(() => {
+//   watchEffect(() => {
+//     if (latitude.value && longitude.value) {
+//       console.log('values received');
+//       useMap(latitude.value, longitude.value, 'map');
+//     }
+//   });
+// });
 </script>
 
 <template>
   <div id="myCounter">
     <h1>My Counter Component</h1>
 
-    <p>Reactive variable count:</p>
-    <div id="counterDiv">
-      <button @click="decrement()">-</button>
+    <hr />
 
-      <p>{{ count }}</p>
-
-      <button @click="increment()">+</button>
-    </div>
-
-    <!-- <p>{{ integer }}</p> -->
-    <p>Max value: {{ max }}</p>
-    <!-- <p>Entered value: {{ count }}</p> -->
-    <p class="error" v-show="error !== ''">Error message: {{ error }}</p>
+    <p>
+      Window width : {{ windowSize.width }}, Window height :
+      {{ windowSize.height }}, Latitude: {{ latitude }}, Longitude:
+      {{ longitude }}, Country: {{ country }}, City: {{ city }}
+    </p>
 
     <hr />
+    <p>
+      Map around the city: <b v-show="city">{{ city }} - {{ country }}</b>
+    </p>
+    <div v-map="{ latitude: latitude, longitude: longitude }" id="map"></div>
   </div>
 </template>
 
@@ -39,18 +49,10 @@ export default {
   line-height: 2;
   font-size: 1.2rem;
 }
-/* #myCounter {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-} */
 
 h1 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
-  /* font-size: 3rem; */
 }
 
 #myCounter #counterDiv {
@@ -95,5 +97,12 @@ input {
 
 .error {
   color: red;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  border: 1px solid #000;
+  margin: 1rem 0;
 }
 </style>
